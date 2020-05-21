@@ -26,10 +26,11 @@ import cocktail from '../utils/cocktail.js'
 export default {
   data() {
     return {
-      drink: JSON.parse(localStorage.getItem('drink')),
+      // drink: JSON.parse(localStorage.getItem('drink')),
     }
   },
   computed: {
+    drink: cocktail(),
     ingredients() {
       let ingredientObj = {}
       for (let i = 1; i < 15; i++) {

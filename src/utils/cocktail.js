@@ -12,7 +12,10 @@ const cocktail = () => {
       localStorage.clear()
       localStorage.setItem('lastUpdate', JSON.stringify(new Date().getDate()))
       localStorage.setItem('drink', JSON.stringify(drink))
+      return localStorage.getItem('drink')
     })
+  } else {
+    return localStorage.getItem('drink')
   }
 }
 
