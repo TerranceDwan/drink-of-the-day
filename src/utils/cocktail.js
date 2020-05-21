@@ -1,6 +1,6 @@
 const request = require('request')
 
-const cocktail = () => {
+const cocktail = (callback) => {
   if (parseInt(localStorage.getItem('lastUpdate')) != new Date().getDate()) {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php'
     request({ url, json: true }, (error, { body }) => {
@@ -12,10 +12,10 @@ const cocktail = () => {
       localStorage.clear()
       localStorage.setItem('lastUpdate', JSON.stringify(new Date().getDate()))
       localStorage.setItem('drink', JSON.stringify(drink))
-      return localStorage.getItem('drink')
+      callback(JSON.parse(localStorage.getItem('drink')))
     })
   } else {
-    return localStorage.getItem('drink')
+    callback(JSON.parse(localStorage.getItem('drink')))
   }
 }
 
