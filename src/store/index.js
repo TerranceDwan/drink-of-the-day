@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    drinkObj: {},
+    drinkObj: JSON.parse(localStorage.getItem('drink')),
   },
   mutations: {
     SET_DRINK(state, drink) {
@@ -14,10 +14,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getDrink({ commit }) {
-      cocktail((drink) => {
-        commit('SET_DRINK', drink)
-      })
+    getDrink() {
+      cocktail()
     },
   },
   modules: {},

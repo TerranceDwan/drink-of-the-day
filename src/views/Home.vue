@@ -1,15 +1,17 @@
 <template>
-  <div class="home" :style="{ backgroundImage: 'url(' + drink.strDrinkThumb + ')' }">
+  <div
+    class="home"
+    :style="{ backgroundImage: 'url(' + drink.strDrinkThumb + ')' }"
+  >
     <h1 class="title">Terrance's Drink of the day</h1>
     <div class="color-overlay"></div>
     <div class="drink-details-container">
       <div class="drink-details">
         <h1>{{ drink.strDrink }}</h1>
         <ul class="ingredient-list">
-          <li
-            v-for="(ingredient, index) in ingredients"
-            :key="index"
-          >{{ ingredient[1] }}{{ ingredient[0] }}</li>
+          <li v-for="(ingredient, index) in ingredients" :key="index">
+            {{ ingredient[1] }}{{ ingredient[0] }}
+          </li>
         </ul>
         <p>{{ drink.strInstructions }}</p>
       </div>
@@ -19,36 +21,36 @@
 
 <script>
 // @ is an alias to /src
-import { mapState, mapActions } from "vuex";
+import cocktail from '../utils/cocktail.js'
 
 export default {
   data() {
-    return {};
-  },
-  computed: {
-    ...mapState({ drink: "drinkObj" }),
-    ingredients() {
-      let ingredientObj = {};
-      for (let i = 1; i < 15; i++) {
-        if (this.drink["strIngredient" + i.toString()] === null) {
-          break;
-        } else {
-          ingredientObj["ingredient" + i.toString()] = [
-            this.drink["strIngredient" + i.toString()],
-            this.drink["strMeasure" + i.toString()] + " of "
-          ];
-        }
-      }
-      return ingredientObj;
+    return {
+      drink: JSON.parse(localStorage.getItem('drink')),
     }
   },
-  methods: {
-    ...mapActions(["getDrink"])
+  computed: {
+    ingredients() {
+      let ingredientObj = {}
+      for (let i = 1; i < 15; i++) {
+        if (this.drink['strIngredient' + i.toString()] === null) {
+          break
+        } else {
+          ingredientObj['ingredient' + i.toString()] = [
+            this.drink['strIngredient' + i.toString()],
+            this.drink['strMeasure' + i.toString()]
+              ? this.drink['strMeasure' + i.toString()] + ' of '
+              : '',
+          ]
+        }
+      }
+      return ingredientObj
+    },
   },
   mounted() {
-    this.getDrink();
-  }
-};
+    cocktail()
+  },
+}
 </script>
 <style scoped>
 .title {
@@ -58,7 +60,7 @@ export default {
   width: 100%;
   z-index: 100;
   opacity: 0;
-  animation: fade-in 2s 3s forwards;
+  animation: fade-in 2s 2s forwards;
 }
 .home {
   background-repeat: no-repeat;
@@ -70,7 +72,7 @@ export default {
 h1 {
   font-weight: 300;
   font-size: 48px;
-  font-family: "Pacifico", cursive;
+  font-family: 'Pacifico', cursive;
   margin-bottom: 30px;
 }
 .color-overlay {
@@ -80,7 +82,7 @@ h1 {
   transition: all 1s;
   background: #00000077;
   opacity: 0;
-  animation: fade-in 2s 3s forwards;
+  animation: fade-in 2s 2s forwards;
 }
 .drink-details-container {
   width: 95%;
@@ -91,13 +93,13 @@ h1 {
   display: table;
   position: relative;
   opacity: 0;
-  animation: fade-in 2s 3s forwards;
+  animation: fade-in 2s 2s forwards;
 }
 .drink-details {
   display: table-cell;
   vertical-align: middle;
   color: white;
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 18px;
 }
 .ingredient-list {
